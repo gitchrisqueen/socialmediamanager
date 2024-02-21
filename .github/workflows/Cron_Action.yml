@@ -48,6 +48,7 @@ jobs:
       - name: execute cron script # run file
         shell: bash
         env:
+          GITHUB_ACTION_TRUE: "True"
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
           ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}

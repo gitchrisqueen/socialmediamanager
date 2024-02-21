@@ -13,14 +13,14 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-
 from cqc_smm.utilities.env_constants import *
 from cqc_smm.utilities.logger import logger
 
-display = Display(visible=False, size=(800, 800))
-display.start()
-
-chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
+# Check ENV for Github action to determine to run this code
+if IS_GITHUB_ACTION:
+    display = Display(visible=False, size=(800, 800))
+    display.start()
+    chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
 
 
 # and if it doesn't exist, download it automatically,
@@ -75,7 +75,10 @@ def close_tab(driver: WebDriver, handles: list[str] = None, max_retry=3):
 
 
 def get_browser_driver():
-    browser_type = which_browser()
+    if IS_GITHUB_ACTION:
+        browser_type = BrowserType.LOCAL_CHROME
+    else:
+        browser_type = which_browser()
     driver = None
     match browser_type:
         case BrowserType.DOCKER_CHROME:

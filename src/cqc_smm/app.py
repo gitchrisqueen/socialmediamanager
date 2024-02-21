@@ -4,10 +4,10 @@ from datetime import datetime
 import requests
 from elevenlabs import RateLimitError
 
-import utilities.audio.elevenlabs_helper as EL
-import utilities.audio.get_rnd_frm as FRM
-import utilities.pexels_helper as PH
-import utilities.video.video_creator as VC
+import cqc_smm.utilities.audio.elevenlabs_helper as EL
+import cqc_smm.utilities.audio.get_rnd_frm as FRM
+import cqc_smm.utilities.pexels_helper as PH
+import cqc_smm.utilities.video.video_creator as VC
 from cqc_smm.utilities.AI import QuoteGenerator
 from cqc_smm.utilities.AI.csv_agent import get_top_n_question
 from cqc_smm.utilities.tiktok_helper import get_tiktok_trending_tags
@@ -102,9 +102,10 @@ class App:
 
         # TODO: Find ClickBank product to promote
         # TODO: Get content topics from Answer The Public
-        csv_file_path = '//downloads/hair growth-en-us-suggestions-30-01-2024.csv'  # TODO: Write code to download csv file or use directory of files
-        topics = get_top_n_question(csv_file_path, 5)
-        self.topic = ", ".join(topics)
+        #csv_file_path = './downloads/hair growth-en-us-suggestions-30-01-2024.csv'  # TODO: Write code to download csv file or use directory of files
+        #topics = get_top_n_question(csv_file_path, 5)
+        #self.topic = ", ".join(topics)
+        self.topic = "Tiktok"
 
     def run(self):
 
