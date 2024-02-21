@@ -14,16 +14,16 @@ from selenium.webdriver.support.wait import WebDriverWait
 from selenium.webdriver.chrome.service import Service
 import chromedriver_autoinstaller
 from pyvirtualdisplay import Display
+
+from cqc_smm.utilities.env_constants import *
+from cqc_smm.utilities.logger import logger
+
 display = Display(visible=False, size=(800, 800))
 display.start()
 
 chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
                                       # and if it doesn't exist, download it automatically,
                                       # then add chromedriver to path
-
-
-from cqc_smm.utilities.env_constants import *
-from cqc_smm.utilities.logger import logger
 
 
 def which_browser():
