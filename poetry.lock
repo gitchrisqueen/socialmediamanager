@@ -547,6 +547,20 @@ files = [
 ]
 
 [[package]]
+name = "chromedriver-autoinstaller"
+version = "0.6.4"
+description = "Automatically install chromedriver that supports the currently installed version of chrome."
+optional = false
+python-versions = ">=3.6"
+files = [
+    {file = "chromedriver-autoinstaller-0.6.4.tar.gz", hash = "sha256:1b4df04b87e6107c730085b98e5fd541db3d1777c32b8bd08e2ca4b1244050af"},
+    {file = "chromedriver_autoinstaller-0.6.4-py3-none-any.whl", hash = "sha256:b12ed187ca9fac4d744deb588d221222ed50836384607e5303e6eab98bb9dc64"},
+]
+
+[package.dependencies]
+packaging = ">=23.1"
+
+[[package]]
 name = "click"
 version = "8.1.7"
 description = "Composable command line interface toolkit"
@@ -3150,6 +3164,17 @@ files = [
 ]
 
 [[package]]
+name = "pyvirtualdisplay"
+version = "3.0"
+description = "python wrapper for Xvfb, Xephyr and Xvnc"
+optional = false
+python-versions = "*"
+files = [
+    {file = "PyVirtualDisplay-3.0-py3-none-any.whl", hash = "sha256:40d4b8dfe4b8de8552e28eb367647f311f88a130bf837fe910e7f180d5477f0e"},
+    {file = "PyVirtualDisplay-3.0.tar.gz", hash = "sha256:09755bc3ceb6eb725fb07eca5425f43f2358d3bf08e00d2a9b792a1aedd16159"},
+]
+
+[[package]]
 name = "pywin32"
 version = "306"
 description = "Python for Window Extensions"
@@ -4898,4 +4923,4 @@ testing = ["big-O", "jaraco.functools", "jaraco.itertools", "more-itertools", "p
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "5d1e0c218d8254ffe59b131b7503196cf6666ffd2c3201ca090a8db50ea2175c"
+content-hash = "808d05a5b886034af4914feccba81ef0477b6294fe6f8e486837ed1f5a710133"
