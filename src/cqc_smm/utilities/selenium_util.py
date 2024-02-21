@@ -1,6 +1,8 @@
 import time
 from enum import Enum
 
+import chromedriver_autoinstaller
+from pyvirtualdisplay import Display
 from selenium import webdriver
 from selenium.common import NoSuchElementException, StaleElementReferenceException, ElementNotInteractableException, \
     TimeoutException, WebDriverException
@@ -11,9 +13,6 @@ from selenium.webdriver.remote.webdriver import WebDriver
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
-from selenium.webdriver.chrome.service import Service
-import chromedriver_autoinstaller
-from pyvirtualdisplay import Display
 
 from cqc_smm.utilities.env_constants import *
 from cqc_smm.utilities.logger import logger
@@ -22,8 +21,10 @@ display = Display(visible=False, size=(800, 800))
 display.start()
 
 chromedriver_autoinstaller.install()  # Check if the current version of chromedriver exists
-                                      # and if it doesn't exist, download it automatically,
-                                      # then add chromedriver to path
+
+
+# and if it doesn't exist, download it automatically,
+# then add chromedriver to path
 
 
 def which_browser():
@@ -53,7 +54,6 @@ class BrowserType(Enum):
 
 
 def close_tab(driver: WebDriver, handles: list[str] = None, max_retry=3):
-
     if handles is None:
         handles = driver.window_handles
 
@@ -70,9 +70,8 @@ def close_tab(driver: WebDriver, handles: list[str] = None, max_retry=3):
         except TimeoutException as te:
             logger.exception(te)
             if (max_retry > 0):
-                close_tab(driver, handles, max_retry-1)
+                close_tab(driver, handles, max_retry - 1)
                 pass
-
 
 
 def get_browser_driver():
@@ -165,7 +164,7 @@ def click_element_wait_retry(driver: WebDriver, wait: WebDriverWait, find_by_val
 
 
 def get_elements_text_as_list_wait_stale(wait: WebDriverWait, find_by_value: str, wait_text: str,
-                                         find_by: str = By.XPATH, max_retry = 3) -> list:
+                                         find_by: str = By.XPATH, max_retry=3) -> list:
     elements_list = []
     while len(elements_list) <= 0:
         try:
@@ -173,7 +172,7 @@ def get_elements_text_as_list_wait_stale(wait: WebDriverWait, find_by_value: str
             elements_list = list(map(lambda x: getText(x), elements))
         except StaleElementReferenceException as se:
             max_retry = max_retry - 1
-            if max_retry>0:
+            if max_retry > 0:
                 pass
             else:
                 raise NoSuchElementException("Could not find element by %s with value: %s" % (find_by, find_by_value))
