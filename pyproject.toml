@@ -1,0 +1,57 @@
+[tool.poetry]
+name = "socialmediamanager"
+version = "0.1.0"
+description = ""
+authors = ["gitchrisqueen <christopher.queen@gmail.com>"]
+readme = "README.md"
+packages = [
+    { include = "cqc_smm", from = "src" },
+]
+
+[tool.poetry.dependencies]
+python = "^3.11"
+langchain = "^0.1.4"
+requests = "^2.31.0"
+pexels-api = "^1.0.1"
+python-unsplash = "^1.2.5"
+mutagen = "^1.47.0"
+pillow = "^10.2.0"
+moviepy = "^1.0.3"
+elevenlabs = "^0.2.27"
+pytube = "^15.0.0"
+bs4 = "^0.0.2"
+feedparser = "^6.0.11"
+ffmpeg = "^1.4"
+accelerate = "^0.26.1"
+diffusers = "^0.25.1"
+jinja2 = "^3.1.3"
+llama-cpp-python = "^0.2.36"
+peft = "^0.7.1"
+rich = "^13.7.0"
+transformers = "^4.37.2"
+langchain-community = "^0.0.16"
+openai = "^1.10.0"
+langchain-experimental = "^0.0.49"
+langchain-openai = "^0.0.5"
+pandas = "^2.2.0"
+tabulate = "^0.9.0"
+repl = "^1.0"
+pyarrow = "^15.0.0"
+selenium = "^4.17.2"
+langchainhub = "^0.1.14"
+
+[tool.poetry.group.dev]
+optional = true
+
+[tool.poetry.group.dev.dependencies]
+jupyter = "^1.0.0"
+setuptools = "^67.6.1"
+#cqc_smm = {path = "src", develop = true}
+
+[tool.pytest.ini_options]
+pythonpath = ["src"]
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
