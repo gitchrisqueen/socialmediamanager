@@ -2,6 +2,7 @@ name: Run Cron Job  On GitHub Action
 on:
   schedule:
     - cron: "0 7 * * *"    #runs at 7:00 UTC / 2AM EST everyday
+  workflow_dispatch:
 jobs:
   cron-run:
     runs-on: ubuntu-latest
