@@ -1,44 +1,60 @@
 name: Run Cron Job  On GitHub Action
+run-name: Cron Run ${{ inputs.working-directory }} by @${{ github.actor }}
 on:
-  schedule:
-    - cron: "0 7 * * *"    #runs at 7:00 UTC / 2AM EST everyday
-  workflow_dispatch:
+  schedule:  #runs at 7:00 UTC / 2AM EST everyday
+    - cron: "0 7 * * *"
+  workflow_dispatch:  # Allows to trigger the workflow manually in GitHub UI
+    inputs:
+      working-directory:
+        required: true
+        type: string
+        default: 'src'
+        description: "From which folder this pipeline executes"
+env:
+  PYTHON_VERSION: "3.11"
+  POETRY_VERSION: "1.7.1"
 jobs:
   cron-run:
     runs-on: ubuntu-latest
     environment: CQ USA
     steps:
       - name: Checking out repo
-        uses: actions/checkout@v3
-      - name: Setting up Python
-        uses: actions/setup-python@v4
+        uses: actions/checkout@v4
+      - name: Set up Python + Poetry ${{ env.POETRY_VERSION }}
+        uses: "./.github/actions/poetry_setup"
         with:
-          python-version: '3.11'
-      - name: Installing package list
-        run: apt list --installed    
-      - name: Removing previous chrome instances on runner 
-        run: sudo apt purge google-chrome-stable  
-        
-       # Need to fetch reqs if needed
-      - name: Installing all necessary packages
-        run: pip install chromedriver-autoinstaller selenium pyvirtualdisplay
-      - name: Install xvfb
-        run: sudo apt-get install xvfb
+          python-version: ${{ env.PYTHON_VERSION }}
+          poetry-version: ${{ env.POETRY_VERSION }}
+          working-directory: ${{ inputs.working-directory }}
+          cache-key: release
 
       - name: Install dependencies
+        working-directory: ${{ inputs.working-directory }}
+        shell: bash
         run: |
-          python -m pip install --upgrade pip
-          pip install flake8 pytest
-          if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
-          # Install our custom library files
-          pip install -e ./src
+          echo "Running cron action, installing dependencies with poetry..."
+          poetry install --with=test_integration,test
+
+      # Need to fetch reqs if needed from external libraries
+      - name: Install deps outside pyproject
+        run: sudo apt-get install xvfb
+
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names
           flake8 . --count --select=E9,F63,F7,F82 --show-source --statistics
           # exit-zero treats all errors as warnings. The GitHub editor is 127 chars wide
           flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
-      - name: execute py script # run file
+      - name: execute cron script # run file
+        shell: bash
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          PEXELS_API_KEY: ${{ secrets.PEXELS_API_KEY }}
+          ELEVENLABS_API_KEY: ${{ secrets.ELEVENLABS_API_KEY }}
+          ELEVENLABS_VOICE_ID: ${{ vars.ELEVENLABS_VOICE_ID}}
+          HEADLESS_BROWSER : ${{ vars.HEADLESS_BROWSER }}
+          WAIT_DEFAULT_TIMEOUT : ${{ vars.WAIT_DEFAULT_TIMEOUT }}
+          MAX_WAIT_RETRY : ${{ vars.MAX_WAIT_RETRY }}
         run: |
           python cron.py
         
