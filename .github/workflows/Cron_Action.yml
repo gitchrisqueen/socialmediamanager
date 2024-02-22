@@ -57,7 +57,7 @@ jobs:
           WAIT_DEFAULT_TIMEOUT : ${{ vars.WAIT_DEFAULT_TIMEOUT }}
           MAX_WAIT_RETRY : ${{ vars.MAX_WAIT_RETRY }}
         run: |
-          python cron.py
+          poetry run python cron.py
         
       - name: Commit and Push The Results From Cron Action
         run: |
